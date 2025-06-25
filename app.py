@@ -41,6 +41,5 @@ def submit():
     return '✅ Data submitted successfully'
 
 if __name__ == '__main__':
-    # Bind to 0.0.0.0 and use environment port for Render
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
