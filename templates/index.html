@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Geo Capture</title>
+    <script src="/static/script.js"></script>
+</head>
+<body>
+    <h2>Employee Location & Photo</h2>
+    <form method="POST" action="/submit">
+        <input type="text" name="emp_id" placeholder="Employee ID" required><br><br>
+        <input type="hidden" name="latitude" id="latitude">
+        <input type="hidden" name="longitude" id="longitude">
+        <input type="hidden" name="image" id="image">
+
+        <video id="video" width="320" height="240" autoplay></video><br>
+        <button type="button" onclick="capturePhoto()">📸 Capture Photo</button><br><br>
+        <canvas id="canvas" style="display:none;"></canvas>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
