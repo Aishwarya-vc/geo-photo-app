@@ -2,6 +2,18 @@ from flask import Flask, render_template, request
 from datetime import datetime
 import os, base64, csv
 
+# Google Sheets Setup
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+
+scope = ['https://www.googleapis.com/auth/spreadsheets']
+creds = ServiceAccountCredentials.from_json_keyfile_name('service_account.json', scope)
+client = gspread.authorize(creds)
+
+# Open your Google Sheet
+sheet_id = '1vb8KpLlP3lccrY_vts_csGBOs_OtX6HADY5U9DtE-9M'
+sheet = client.open_by_key(sheet_id).sheet1
+
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
 CSV_FILE = 'data.csv'
@@ -29,14 +41,17 @@ def submit():
     filename = f"{emp_id}_{timestamp}.png"
     filepath = os.path.join(UPLOAD_FOLDER, filename)
 
-    # Save image
+    # Save image locally
     with open(filepath, 'wb') as f:
         f.write(image_bytes)
 
-    # Save data to CSV
+    # Save to CSV file
     with open(CSV_FILE, 'a', newline='') as f:
         writer = csv.writer(f)
         writer.writerow([emp_id, latitude, longitude, timestamp, filename])
+
+    # Save to Google Sheet
+    sheet.append_row([emp_id, latitude, longitude, filename, timestamp])
 
     return '✅ Data submitted successfully'
 
