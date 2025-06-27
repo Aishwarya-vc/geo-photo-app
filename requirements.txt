@@ -10,3 +10,6 @@ setuptools==75.1.0
 wheel==0.44.0
 Flask==2.2.5
 Werkzeug==2.2.3
+gspread==5.12.0
+oauth2client==4.1.3
+
